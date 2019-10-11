@@ -1,31 +1,38 @@
 {
-  "name": "test-react",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "plantlandia",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "bulma": "^0.7.5",
+        "express": "^4.17.1",
+        "node-fetch": "^2.6.0",
+        "prettier": "^1.18.2",
+        "react": "^16.10.2",
+        "react-dom": "^16.10.2",
+        "react-scripts": "3.2.0",
+        "styled-components": "^4.4.0"
+    },
+    "scripts": {
+        "start-server": "node ./server/server.js",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "proxy": "http://localhost:5000/",
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }
