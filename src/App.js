@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 
 function App() {
     const [plants, setPlants] = useState([]);
-    const getApi = () => {
-        fetch(`/plant`, {
+    const [error, setError] = useState();
+    const getPlant = () => {
+        fetch(`/plantByName/philodendron`, {
             method: "GET"
         })
             .then(function(response) {
@@ -13,21 +13,23 @@ function App() {
                 return response.json();
             })
             .then(resp => {
+                console.log("resp.data", resp.data);
                 setPlants(resp.data);
             })
             .catch(function(error) {
                 console.log("ERROR: ", error);
+                setError("An error occured");
             });
     };
     return (
-        <section className="hero is-success is-fullheight">
+        <section className="hero  is-fullheight">
             <div className="hero-body">
                 <div className="container">
                     <h1 className="title">Plantlandia</h1>
-                    <button className="button" onClick={getApi}>
+                    <button className="button" onClick={getPlant}>
                         Get plants
                     </button>
-                    <br></br>
+                    <p></p>
                     {plants &&
                         plants.length > 0 &&
                         plants.map(p => {
@@ -39,6 +41,7 @@ function App() {
                                 )
                             );
                         })}
+                    {error && <p>{error}</p>}
                 </div>
             </div>
         </section>
