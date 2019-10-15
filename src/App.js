@@ -6,9 +6,10 @@ function App() {
     const [plants, setPlants] = useState([]);
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    const [hasSearched, setHasSearched] = useState(false);
 
-    const getPlants = () => {
-        fetch(`/plantByName/${query}`, {
+    const getPlants = (q) => {
+        fetch(`/plantByName/${q}`, {
             method: "GET"
         })
             .then(function(response) {
@@ -32,22 +33,24 @@ function App() {
         setPlants([]);
         setQuery("");
         setError(null);
+        setHasSearched(false);
     };
 
     const handleSearch = (e)=>{
         setIsLoading(true);
         setError(null);
         setQuery(e.target.value);
+        setHasSearched(true);
        
     }
-    const debouncedQuery = useCallback(debounce(getPlants, 1000), []);
+    const debouncedQuery = useCallback(debounce(q=>getPlants(q), 500), []);
 
     useEffect(() => {
         if (query) {
             debouncedQuery(query)
         }
-    }, [query]);
-
+    }, [debouncedQuery, query]);
+    
     return (
         <section className="hero is-success is-fullheight">
             <div className="hero-body">
@@ -70,25 +73,27 @@ function App() {
                     </div>
 
                     {isLoading && (
-                        <progress
-                            class="progress is-small is-warning"
+                        <div className="column is-half"><progress
+                            className="progress is-small is-warning"
                             max="100">
                             15%
                         </progress>
+                        </div>
                     )}
                     <p></p>
-                    {!isLoading &&
+                    {
                         plants &&
                         plants.length > 0 &&
                         plants.map(p => {
                             return (
-                                p.common_name != null && (
-                                    <div className="box">
-                                        <p>{p.common_name}</p>
+                                
+                                    <div key={p.id} className="box column is-half">
+                                        <p>{p.scientific_name}</p>
                                     </div>
-                                )
+                                
                             );
-                        })}
+                        }) }
+                        {hasSearched && !isLoading && plants && plants.length ===0 && <p>No plants found</p>}
                     {error && <p>{error}</p>}
                 </div>
             </div>
