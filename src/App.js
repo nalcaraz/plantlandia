@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import debounce from "./helpers/debounce";
+import Plant from "./components/Plant";
 
 function App() {
     const [query, setQuery] = useState("");
@@ -8,7 +9,7 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
 
-    const getPlants = (q) => {
+    const getPlants = q => {
         fetch(`/plantByName/${q}`, {
             method: "GET"
         })
@@ -36,26 +37,25 @@ function App() {
         setHasSearched(false);
     };
 
-    const handleSearch = (e)=>{
+    const handleSearch = e => {
         setIsLoading(true);
         setError(null);
         setQuery(e.target.value);
         setHasSearched(true);
-       
-    }
-    const debouncedQuery = useCallback(debounce(q=>getPlants(q), 500), []);
+    };
+    const debouncedQuery = useCallback(debounce(q => getPlants(q), 500), []);
 
     useEffect(() => {
         if (query) {
-            debouncedQuery(query)
+            debouncedQuery(query);
         }
     }, [debouncedQuery, query]);
-    
+
     return (
         <section className="hero is-success is-fullheight">
             <div className="hero-body">
                 <div className="container">
-                    <h1 className="title">Plantlandia</h1>
+                    <p className="title">Plantlandia</p>
                     <div className="columns container">
                         <div className="column is-half">
                             <input
@@ -73,27 +73,30 @@ function App() {
                     </div>
 
                     {isLoading && (
-                        <div className="column is-half"><progress
-                            className="progress is-small is-warning"
-                            max="100">
-                            15%
-                        </progress>
+                        <div className="column is-half">
+                            <progress
+                                className="progress is-small is-warning"
+                                max="100">
+                                15%
+                            </progress>
                         </div>
                     )}
                     <p></p>
-                    {
-                        plants &&
+                    {plants &&
                         plants.length > 0 &&
                         plants.map(p => {
                             return (
-                                
-                                    <div key={p.id} className="box column is-half">
-                                        <p>{p.scientific_name}</p>
-                                    </div>
-                                
+                                <div key={p.id} className="box column is-half">
+                                    <Plant
+                                        id={p.id}
+                                        name={p.scientific_name}></Plant>
+                                </div>
                             );
-                        }) }
-                        {hasSearched && !isLoading && plants && plants.length ===0 && <p>No plants found</p>}
+                        })}
+                    {hasSearched &&
+                        !isLoading &&
+                        plants &&
+                        plants.length === 0 && <p>No plants found</p>}
                     {error && <p>{error}</p>}
                 </div>
             </div>

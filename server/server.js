@@ -5,7 +5,7 @@ console.log(process.env.PORT);
 const dotenv = require("dotenv");
 dotenv.config();
 const port = process.env.PORT || 5000;
-
+const token = process.env.PLANT_TOKEN;
 console.log(process.env.port);
 
 app.use(express.urlencoded({ extended: true }));
@@ -15,8 +15,23 @@ app.get("/", (req, res) => {
     res.send("PORT 5000");
 });
 
-app.get("/plants", (req, res) => {
-    const url = `https://trefle.io/api/plants?token=${process.env.PLANT_TOKEN}`;
+// app.get("/plants", (req, res) => {
+//     const url = `https://trefle.io/api/plants?token=${token}`;
+//     fetch(url)
+//         .then(res => {
+//             return res.json();
+//         })
+//         .then(data => {
+//             res.send({ data });
+//         })
+//         .catch(err => {
+//             res.redirect("/error");
+//         });
+// });
+
+app.get("/plantByName/:plantName", (req, res, next) => {
+    const url = `https://trefle.io/api/plants?token=${token}&q=${req.params.plantName}`;
+
     fetch(url)
         .then(res => {
             return res.json();
@@ -25,13 +40,13 @@ app.get("/plants", (req, res) => {
             res.send({ data });
         })
         .catch(err => {
+            console.log("err", err);
             res.redirect("/error");
         });
 });
 
-app.get("/plantByName/:plantName", (req, res, next) => {
-    console.log(process.env.PLANT_TOKEN);
-    const url = `https://trefle.io/api/plants?token=${process.env.PLANT_TOKEN}&q=${req.params.plantName}`;
+app.get("/plant/:id", (req, res, next) => {
+    const url = `https://trefle.io/api/plants/${req.params.id}?token=${token}`;
 
     fetch(url)
         .then(res => {
