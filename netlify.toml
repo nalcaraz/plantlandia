@@ -1,0 +1,5 @@
+# example netlify.toml
+[build]
+  command = "npm build"
+  functions = "functions" #  netlify-lambda reads this
+  publish = "build"

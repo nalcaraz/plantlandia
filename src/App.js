@@ -10,17 +10,15 @@ function App() {
     const [hasSearched, setHasSearched] = useState(false);
 
     const getPlants = q => {
-        fetch(`/plantByName/${q}`, {
-            method: "GET"
-        })
+        fetch(`/.netlify/functions/plants?name=${q}`)
             .then(function(response) {
                 console.log("response", response);
                 if (!response.ok) return Promise.reject(response);
                 return response.json();
             })
             .then(resp => {
-                console.log("resp.data", resp.data);
-                setPlants(resp.data);
+                console.log("resp.data", resp);
+                setPlants(resp);
                 setIsLoading(false);
             })
             .catch(function(error) {
@@ -52,7 +50,7 @@ function App() {
     }, [debouncedQuery, query]);
 
     return (
-        <section className="hero is-success is-fullheight">
+        <section className="hero is-fullheight">
             <div className="hero-body">
                 <div className="container">
                     <p className="title">Plantlandia</p>

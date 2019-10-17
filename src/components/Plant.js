@@ -6,7 +6,7 @@ function Plant({ id, name }) {
 
     useEffect(() => {
         setIsLoading(true);
-        fetch(`/plant/${id}`, {
+        fetch(`/.netlify/functions/plantById?id=${id}`, {
             method: "GET"
         })
             .then(function(response) {
@@ -15,8 +15,8 @@ function Plant({ id, name }) {
                 return response.json();
             })
             .then(resp => {
-                console.log("resp.data", resp.data);
-                setPlant(resp.data);
+                console.log("resp.data", resp);
+                setPlant(resp);
                 setIsLoading(false);
             })
             .catch(function(error) {
