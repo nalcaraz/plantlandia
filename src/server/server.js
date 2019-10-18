@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 
 app.get("/plantByName/:plantName", (req, res, next) => {
     const url = `https://trefle.io/api/plants?token=${token}&q=${req.params.plantName}`;
-
+    console.log("tokeb", token);
     fetch(url)
         .then(res => {
             return res.json();
