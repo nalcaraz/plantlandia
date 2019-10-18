@@ -5,6 +5,7 @@
     "dependencies": {
         "bulma": "^0.7.5",
         "dotenv": "^8.1.0",
+        "encoding": "^0.1.12",
         "express": "^4.17.1",
         "http-proxy-middleware": "^0.20.0",
         "netlify-lambda": "^1.6.3",
