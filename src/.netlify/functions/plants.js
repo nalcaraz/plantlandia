@@ -14,11 +14,11 @@ exports.handler = function(event, context, callback) {
             return res.json();
         })
         .then(data => ({
-            statusCode: "200",
+            statusCode: 200,
             body: JSON.stringify(data)
         }))
         .catch(err => {
             console.log("FUNCTION ERROR", err);
-            return { statusCode: "422", body: String(err) };
+            return { statusCode: 422, body: String(err) };
         });
 };
