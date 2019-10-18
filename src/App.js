@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import debounce from "./helpers/debounce";
 import Plant from "./components/Plant";
-
+import * as plant from './images/plantlandia_white.png'
 function App() {
     const [query, setQuery] = useState("");
     const [plants, setPlants] = useState([]);
@@ -50,10 +50,10 @@ function App() {
     }, [debouncedQuery, query]);
 
     return (
-        <section className="hero is-fullheight">
+        <section className="hero is-success is-fullheight">
             <div className="hero-body">
                 <div className="container">
-                    <p className="title">Plantlandia</p>
+               <h1 className="is-size-1">   <img src={plant} className="image is-128x128 is-inline-block"></img>  Plantlandia</h1>  
                     <div className="columns container">
                         <div className="column is-half">
                             <input
